@@ -1,14 +1,18 @@
-[gd_scene load_steps=4 format=3]
-[ext_resource path="res://scripts/main.gd" type="Script" id=1]
-[ext_resource path="res://scenes/Player.tscn" type="PackedScene" id=2]
-[ext_resource path="res://scenes/Resource.tscn" type="PackedScene" id=3]
-[ext_resource path="res://scenes/Fruit.tscn" type="PackedScene" id=4]
-[ext_resource path="res://ui/HUD.tscn" type="PackedScene" id=5]
+[gd_scene load_steps=5 format=3 uid="uid://d1x2y3z4a5b6"]
+
+[ext_resource type="Script" path="res://scripts/main.gd" id="1_script"]
+[ext_resource type="PackedScene" path="res://scenes/Player.tscn" id="2_player"]
+[ext_resource type="PackedScene" path="res://scenes/Resource.tscn" id="3_resource"]
+[ext_resource type="PackedScene" path="res://scenes/Fruit.tscn" id="4_fruit"]
+[ext_resource type="PackedScene" path="res://scenes/HUD.tscn" id="5_hud"]
 
 [node name="Main" type="Node2D"]
-script = ExtResource( 1 )
+script = ExtResource("1_script")
 
-[node name="Player" instance=ExtResource( 2 ) parent="."]
-[node name="Resource" instance=ExtResource( 3 ) parent="."]
-[node name="Fruit" instance=ExtResource( 4 ) parent="."]
-[node name="HUD" instance=ExtResource( 5 ) parent="."]
+[node name="Player" parent="." instance=ExtResource("2_player")]
+
+[node name="Resource" parent="." instance=ExtResource("3_resource")]
+
+[node name="Fruit" parent="." instance=ExtResource("4_fruit")]
+
+[node name="HUD" parent="." instance=ExtResource("5_hud")]

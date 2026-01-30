@@ -1,37 +1,50 @@
+[gd_scene load_steps=2 format=3 uid="uid://g1x2y3z4a5b6"]
 
-[gd_scene load_steps=3 format=3]
-[ext_resource path="res://scripts/hud.gd" type="Script" id=1]
-[ext_resource path="res://assets/collect_beep.wav" type="AudioStream" id=2]
+[ext_resource type="Script" path="res://scripts/hud.gd" id="1_script"]
 
 [node name="HUD" type="CanvasLayer"]
-script = ExtResource( 1 )
+script = ExtResource("1_script")
 
-[node name="Control" type="Control" parent="HUD"]
+[node name="Control" type="Control" parent="."]
+layout_mode = 3
+anchors_preset = 15
 anchor_right = 1.0
 anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
 
-[node name="EnergyBar" type="ProgressBar" parent="HUD/Control"]
+[node name="EnergyBar" type="ProgressBar" parent="Control"]
+layout_mode = 0
+offset_left = 8.0
+offset_top = 8.0
+offset_right = 208.0
+offset_bottom = 32.0
 min_value = 0.0
 max_value = 100.0
 value = 100.0
-rect_position = Vector2(8, 8)
-rect_size = Vector2(200, 24)
 
-[node name="InventoryGrid" type="GridContainer" parent="HUD/Control"]
+[node name="InventoryGrid" type="GridContainer" parent="Control"]
+layout_mode = 0
+offset_left = 8.0
+offset_top = 40.0
+offset_right = 128.0
+offset_bottom = 160.0
 columns = 2
-rect_position = Vector2(8, 40)
-rect_size = Vector2(120, 120)
 
-[node name="ItemSlotTemplate" type="TextureRect" parent="HUD/Control"]
-stretch_mode = 2
+[node name="ItemSlotTemplate" type="TextureRect" parent="Control"]
 visible = false
-rect_position = Vector2(8, 40)
-rect_size = Vector2(48, 48)
+layout_mode = 0
+offset_left = 8.0
+offset_top = 40.0
+offset_right = 56.0
+offset_bottom = 88.0
+stretch_mode = 2
 
-[node name="Notifications" type="VBoxContainer" parent="HUD/Control"]
-rect_position = Vector2(220, 8)
-rect_size = Vector2(200, 200)
+[node name="Notifications" type="VBoxContainer" parent="Control"]
+layout_mode = 0
+offset_left = 220.0
+offset_top = 8.0
+offset_right = 420.0
+offset_bottom = 208.0
 
-[node name="AudioPlayer" type="AudioStreamPlayer" parent="HUD"]
-stream = ExtResource( 2 )
-
+[node name="AudioPlayer" type="AudioStreamPlayer" parent="."]

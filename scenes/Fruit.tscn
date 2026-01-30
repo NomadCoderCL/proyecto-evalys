@@ -1,17 +1,21 @@
-[gd_scene load_steps=3 format=3]
-[ext_resource path="res://scripts/resource.gd" type="Script" id=1]
-[ext_resource path="res://assets/fruit_icon.png" type="Texture2D" id=2]
+[gd_scene load_steps=4 format=3 uid="uid://f1x2y3z4a5b6"]
+
+[ext_resource type="Script" path="res://scripts/resource.gd" id="1_script"]
+[ext_resource type="Texture2D" path="res://assets/sprite_fruit.png" id="2_icon"]
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_1"]
+size = Vector2(20, 20)
 
 [node name="Fruit" type="Area2D"]
-script = ExtResource( 1 )
 position = Vector2(500, 320)
+script = ExtResource("1_script")
 resource_type = "Fruit"
 amount = 1
 restores_energy = true
 restore_amount = 30
 
 [node name="Sprite" type="Sprite2D" parent="."]
-texture = ExtResource( 2 )
+texture = ExtResource("2_icon")
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="."]
-shape = RectangleShape2D { extents = Vector2(10, 10) }
+shape = SubResource("RectangleShape2D_1")
