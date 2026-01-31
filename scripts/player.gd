@@ -22,6 +22,8 @@ func _process(delta: float) -> void:
 	if energy < energy_max:
 		_change_energy(energy_regen_per_second * delta)
 
+@onready var animation_player = $AnimationPlayer
+
 func _physics_process(delta: float) -> void:
 	var input_vector: Vector2 = Vector2(
 		Input.get_action_strength("ui_right") - Input.get_action_strength("ui_left"),
@@ -29,6 +31,10 @@ func _physics_process(delta: float) -> void:
 	)
 	if input_vector.length() > 0:
 		input_vector = input_vector.normalized()
+		animation_player.play("walk_down")
+	else:
+		animation_player.play("idle_down")
+		
 	velocity = input_vector * speed
 	move_and_slide()
 
@@ -45,7 +51,8 @@ func _try_collect_at(mouse_pos: Vector2) -> void:
 	for resource in nodes:
 		if not resource is Node2D:
 			continue
-		var distance_to_mouse := resource.global_position.distance_to(mouse_pos)
+		var node_2d := resource as Node2D
+		var distance_to_mouse := node_2d.global_position.distance_to(mouse_pos)
 		if distance_to_mouse < min_dist_mouse:
 			min_dist_mouse = distance_to_mouse
 			target = resource

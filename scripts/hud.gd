@@ -1,29 +1,45 @@
 extends CanvasLayer
 
 @onready var energy_bar = $Control/EnergyBar
-@onready var inventory_grid = $Control/InventoryGrid
+@onready var inventory_grid = %InventoryGrid
 @onready var slot_template = $Control/ItemSlotTemplate
 @onready var notifications = $Control/Notifications
 @onready var audio = $AudioPlayer
+@onready var inventory_window = $Control/InventoryWindow
 
 var active_notifications := []
 
+@onready var time_label = $Control/TimeLabel
+
 func _ready() -> void:
-	# Conectar con el Player en la escena actual
+	# Conectar con la escena principal
 	var root = get_tree().get_current_scene()
-	if root and root.has_node("Player"):
-		var player = root.get_node("Player")
-		# Godot 4 signal connection syntax
-		if not player.energy_changed.is_connected(_on_energy_changed):
-			player.energy_changed.connect(_on_energy_changed)
-		if not player.inventory_changed.is_connected(_on_inventory_changed):
-			player.inventory_changed.connect(_on_inventory_changed)
-		if not player.notify.is_connected(_on_notify):
-			player.notify.connect(_on_notify)
+	if root:
+		if root.has_node("Player"):
+			var player = root.get_node("Player")
+			if not player.energy_changed.is_connected(_on_energy_changed):
+				player.energy_changed.connect(_on_energy_changed)
+			if not player.inventory_changed.is_connected(_on_inventory_changed):
+				player.inventory_changed.connect(_on_inventory_changed)
+			if not player.notify.is_connected(_on_notify):
+				player.notify.connect(_on_notify)
+			
+			# Initial update
+			_on_energy_changed(player.energy)
+			_on_inventory_changed(player.inventory)
 		
-		# Initial update
-		_on_energy_changed(player.energy)
-		_on_inventory_changed(player.inventory)
+		if root.has_node("DayNightCycle"):
+			var day_night = root.get_node("DayNightCycle")
+			if not day_night.time_tick.is_connected(_on_time_tick):
+				day_night.time_tick.connect(_on_time_tick)
+
+func _input(event: InputEvent) -> void:
+	if event.is_action_pressed("toggle_inventory"):
+		inventory_window.visible = not inventory_window.visible
+		# Optional: Play sound
+		if audio:
+			# If we had a sound for UI open/close, play it here
+			pass
 
 func _on_energy_changed(value: float) -> void:
 	energy_bar.value = value
@@ -71,3 +87,17 @@ func _clear_notification(lbl: Label, t: Timer) -> void:
 		lbl.queue_free()
 	if is_instance_valid(t):
 		t.queue_free()
+
+func _on_time_tick(hour: int, minute: int) -> void:
+	# Format: 12:00 PM
+	var period = "AM"
+	if hour >= 12:
+		period = "PM"
+	
+	var display_hour = hour
+	if display_hour > 12:
+		display_hour -= 12
+	elif display_hour == 0:
+		display_hour = 12
+		
+	time_label.text = "%02d:%02d %s" % [display_hour, minute, period]

@@ -37,3 +37,30 @@ func load_game() -> void:
 			if player:
 				player.set_data(data)
 				print("Game Loaded")
+
+func change_scene(path: String) -> void:
+	# Small delay or transition logic could go here
+	get_tree().change_scene_to_file(path)
+
+func start_new_game() -> void:
+	# Here we could reset global variables if we had any identifying the current run
+	# For now, just deleting the save file if we wanted a "fresh" start might be too aggressive,
+	# so we will just load the main scene. The player variables reset on _ready.
+	change_scene("res://scenes/Main.tscn")
+
+func continue_game() -> void:
+	if has_save():
+		change_scene("res://scenes/Main.tscn")
+		# We need to defer the load until the scene is ready
+		# A simple way is to wait a frame or use a signal, but for simplicity:
+		await get_tree().process_frame
+		await get_tree().process_frame
+		load_game()
+	else:
+		notify_ui("No saved game found")
+
+func has_save() -> bool:
+	return FileAccess.file_exists(SAVE_PATH)
+
+func exit_game() -> void:
+	get_tree().quit()

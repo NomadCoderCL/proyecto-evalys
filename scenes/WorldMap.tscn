@@ -1,0 +1,17 @@
+[gd_scene load_steps=5 format=3 uid="uid://w1x2y304a5b6"]
+
+[ext_resource type="Script" path="res://scripts/world_map.gd" id="1_script"]
+[ext_resource type="Texture2D" path="res://assets/tile_grass.png" id="2_tiles"]
+
+[sub_resource type="TileSetAtlasSource" id="TileSetAtlasSource_1"]
+texture = ExtResource("2_tiles")
+texture_region_size = Vector2i(32, 32)
+0:0/0 = 0
+
+[sub_resource type="TileSet" id="TileSet_1"]
+tile_size = Vector2i(32, 32)
+sources/0 = SubResource("TileSetAtlasSource_1")
+
+[node name="WorldMap" type="TileMapLayer"]
+tile_set = SubResource("TileSet_1")
+script = ExtResource("1_script")

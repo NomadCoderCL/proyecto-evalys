@@ -1,27 +1,31 @@
 extends Node
 
-const REQUIRED_ACTIONS := {
+var REQUIRED_ACTIONS := {
 	"ui_up": [
-		{"type": InputEventKey, "keycode": Key.W},
-		{"type": InputEventKey, "keycode": Key.UP}
+		{"type": InputEventKey, "keycode": KEY_W},
+		{"type": InputEventKey, "keycode": KEY_UP}
 	],
 	"ui_down": [
-		{"type": InputEventKey, "keycode": Key.S},
-		{"type": InputEventKey, "keycode": Key.DOWN}
+		{"type": InputEventKey, "keycode": KEY_S},
+		{"type": InputEventKey, "keycode": KEY_DOWN}
 	],
 	"ui_left": [
-		{"type": InputEventKey, "keycode": Key.A},
-		{"type": InputEventKey, "keycode": Key.LEFT}
+		{"type": InputEventKey, "keycode": KEY_A},
+		{"type": InputEventKey, "keycode": KEY_LEFT}
 	],
 	"ui_right": [
-		{"type": InputEventKey, "keycode": Key.D},
-		{"type": InputEventKey, "keycode": Key.RIGHT}
+		{"type": InputEventKey, "keycode": KEY_D},
+		{"type": InputEventKey, "keycode": KEY_RIGHT}
 	],
 	"interact": [
-		{"type": InputEventKey, "keycode": Key.E}
+		{"type": InputEventKey, "keycode": KEY_E}
 	],
 	"build": [
-		{"type": InputEventKey, "keycode": Key.B}
+		{"type": InputEventKey, "keycode": KEY_B}
+	],
+	"toggle_inventory": [
+		{"type": InputEventKey, "keycode": KEY_I},
+		{"type": InputEventKey, "keycode": KEY_TAB}
 	]
 }
 
